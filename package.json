@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify app.js -o bundle.js",
-    "watch" : "npx watchify app.js -o bundle.js"
+    "build": "browserify public/app.js -o public/bundle.js",
+    "watch": "npx watchify public/app.js -o public/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "express": "^4.18.2",
+    "firebase": "^9.17.1",
     "snoowrap": "^1.23.0"
   }
 }
