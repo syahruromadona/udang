@@ -39916,13 +39916,29 @@ reddit.getSubreddit('sales').getHot().then(posts => {
         let noUpvote = document.createElement('p')
         let noComment = document.createElement('p')
         let sourceSubreddit = document.createElement('p')
+        
+        divDetail.id = 'divDetail'
+        noUpvote.classList.add('detail')
+        noComment.classList.add('detail')
+        sourceSubreddit.classList.add('detail')
+
         let grayLine = document.createElement('div')
+        let commentButton = document.createElement('button')
+        let bookmarkButton = document.createElement('button')
            
         // POPULATE POST
         let linkPermanent = submit.url
         h1.setAttribute('href', linkPermanent);
         h1.textContent = indexTitle   
         h4.textContent = indexSelftext
+
+        noUpvote.textContent = submit.ups + ' Upvote'
+        noComment.textContent = submit.num_comments + ' Comment'
+        sourceSubreddit.textContent = submit.subreddit_name_prefixed
+
+        grayLine.textContent = ''
+        commentButton.textContent = 'Comment'
+        bookmarkButton.textContent = 'Bookmark'
 
         // STYLE POST
         div.classList.add('m-3');
@@ -39931,40 +39947,47 @@ reddit.getSubreddit('sales').getHot().then(posts => {
         div.classList.add('border-colourborder');
         div.classList.add('rounded-xl');
         div.classList.add('bg-bggelap');
+        
+        h1.classList.add('font-bold');
+        h1.classList.add('underline');
+
+        divDetail.classList.add('flex');
+        divDetail.classList.add('justify-between');
+        noUpvote.classList.add('pr-2');
+        noComment.classList.add('pr-2');
+        sourceSubreddit.classList.add('pr-2');
+        noUpvote.classList.add('text-white');
+        noComment.classList.add('text-white');
+        sourceSubreddit.classList.add('text-white');
+        noUpvote.classList.add('text-opacity-25');
+        noComment.classList.add('text-opacity-25');
+        sourceSubreddit.classList.add('text-opacity-25');
+
+        grayLine.classList.add('bg-bgterang');
+        grayLine.classList.add('h-1');
+        grayLine.classList.add('w-auto');
+        grayLine.classList.add('text-transparent');
+        grayLine.classList.add('m-2');
+        commentButton.classList.add('bg-orangeMain');
+        commentButton.classList.add('border-2');
+        commentButton.classList.add('border-colourborder');
+        commentButton.classList.add('rounded-xl');
+        commentButton.classList.add('p-2');
+        bookmarkButton.classList.add('float-right');
+        bookmarkButton.classList.add('p-2');
 
         // APPEND POST
         div.appendChild(h1)
         div.appendChild(h4)
         div.appendChild(divDetail)
-        div.appendChild(grayLine)
-
-        // ######################################################################
-
-        // CREATE DETAIL
-        divDetail.id = 'divDetail'
-        noUpvote.classList.add('detail')
-        noComment.classList.add('detail')
-        sourceSubreddit.classList.add('detail')
-    
-        // STYLE DETAIL
-        divDetail.classList.add('flex');
-        noUpvote.classList.add('p-2');
-        noComment.classList.add('p-2');
-        sourceSubreddit.classList.add('p-2');
-
-        // POPULATE DETAIL
-        noUpvote.textContent = submit.ups + ' Upvote'
-        noComment.textContent = submit.num_comments + ' Comment'
-        sourceSubreddit.textContent = submit.subreddit_name_prefixed
-
-        // APPEND DETAIL
+        
         divDetail.appendChild(noUpvote)
         divDetail.appendChild(noComment)
         divDetail.appendChild(sourceSubreddit)
 
-        grayLine.classList.add('bg-red-500');
-        grayLine.classList.add('h-10');
-        grayLine.classList.add('w-10');
+        div.appendChild(grayLine)
+        div.appendChild(commentButton)
+        div.appendChild(bookmarkButton)
 
         // APPEND TO PARENT
         parentDiv.appendChild(div)
