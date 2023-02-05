@@ -39866,6 +39866,9 @@ function config (name) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],60:[function(require,module,exports){
 const parentDiv = document.getElementById('parentDiv');
+const firstSubreddit = document.getElementById('firstSubreddit');
+const editSubredditButton = document.getElementById('editSubredditButton');
+const editSubredditDiv = document.getElementById('editSubredditDiv');
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -39899,7 +39902,21 @@ const reddit = new snoowrap({
     password:'Allahituberkuasa0987'
 });
 
-reddit.getSubreddit('sales').getHot().then(posts => {
+editSubredditButton.addEventListener('click', function () {
+    console.log('anjay')
+    
+    if (editSubredditDiv.classList.contains("hidden")) {
+        editSubredditDiv.classList.remove("hidden");
+      } else {
+        editSubredditDiv.classList.add("hidden");
+      }
+});
+
+firstSubreddit.addEventListener('click', getReddit);
+
+async function getReddit() {
+
+    await reddit.getSubreddit('sales').getHot().then(posts => {
     
     let postNumber = 1;
     
@@ -39924,6 +39941,7 @@ reddit.getSubreddit('sales').getHot().then(posts => {
 
         let grayLine = document.createElement('div')
         let commentButton = document.createElement('button')
+        let expandButton = document.createElement('button')
         let bookmarkButton = document.createElement('button')
            
         // POPULATE POST
@@ -39938,6 +39956,7 @@ reddit.getSubreddit('sales').getHot().then(posts => {
 
         grayLine.textContent = ''
         commentButton.textContent = 'Comment'
+        expandButton.textContent = 'Expand'
         bookmarkButton.textContent = 'Bookmark'
 
         // STYLE POST
@@ -39968,13 +39987,17 @@ reddit.getSubreddit('sales').getHot().then(posts => {
         grayLine.classList.add('w-auto');
         grayLine.classList.add('text-transparent');
         grayLine.classList.add('m-2');
-        commentButton.classList.add('bg-orangeMain');
-        commentButton.classList.add('border-2');
-        commentButton.classList.add('border-colourborder');
+        grayLine.classList.add('mr-0');
+        grayLine.classList.add('ml-0');
+        commentButton.classList.add('hover:bg-orangeMain');
         commentButton.classList.add('rounded-xl');
         commentButton.classList.add('p-2');
+        expandButton.classList.add('hover:bg-orangeMain');
+        expandButton.classList.add('rounded-xl');
+        expandButton.classList.add('p-2');
         bookmarkButton.classList.add('float-right');
         bookmarkButton.classList.add('p-2');
+        bookmarkButton.classList.add('pr-0');
 
         // APPEND POST
         div.appendChild(h1)
@@ -39988,6 +40011,7 @@ reddit.getSubreddit('sales').getHot().then(posts => {
         div.appendChild(grayLine)
         div.appendChild(commentButton)
         div.appendChild(bookmarkButton)
+        div.appendChild(expandButton)
 
         // APPEND TO PARENT
         parentDiv.appendChild(div)
@@ -39995,7 +40019,7 @@ reddit.getSubreddit('sales').getHot().then(posts => {
         postNumber++
     });
 });
-
+}
 // console.log('anjay')
 // npm run watch
 // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
