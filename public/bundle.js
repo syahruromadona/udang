@@ -39866,7 +39866,7 @@ function config (name) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],60:[function(require,module,exports){
 const parentDiv = document.getElementById('parentDiv');
-const firstSubreddit = document.getElementById('firstSubreddit');
+const subredditButton = document.getElementById('firstSubreddit')
 const editSubredditButton = document.getElementById('editSubredditButton');
 const editSubredditDiv = document.getElementById('editSubredditDiv');
 
@@ -39912,11 +39912,14 @@ editSubredditButton.addEventListener('click', function () {
       }
 });
 
-firstSubreddit.addEventListener('click', getReddit);
+subredditButton.addEventListener('click', getFirstSubreddit);
 
-async function getReddit() {
+async function getFirstSubreddit() {
 
-    await reddit.getSubreddit('sales').getHot().then(posts => {
+    console.log('loading...')
+
+    let subredditName = subredditButton.innerText;
+    await reddit.getSubreddit(subredditName).getHot().then(posts => {
     
     let postNumber = 1;
     
