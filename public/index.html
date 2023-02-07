@@ -25,24 +25,25 @@
     </header>
     
     <div id="editSubredditDiv" class="m-2 p-2 hidden rounded-xl bg-bgterang">
-        <h3 class="text-orangeMain items-center font-bold">First Subreddit</h3> <input class="rounded-xl p-1 m-2 max-w-sm bg-white shadow-lg">
+        <h3 class="text-orangeMain items-center font-bold">First Subreddit</h3>
+        <input id="firstInputSubreddit" class=" rounded-xl p-1 m-2 max-w-sm bg-white shadow-lg">
 
         <h3 class="text-orangeMain items-center font-bold">Second Subreddit</h3>
-        <input class="rounded-xl p-1 m-2 max-w-sm bg-white shadow-lg">
+        <input id="secondInputSubreddit" class="rounded-xl p-1 m-2 max-w-sm bg-white shadow-lg">
 
         <h3 class="text-orangeMain items-center font-bold">Third Subreddit</h3>
-        <input class="rounded-xl p-1 m-2 max-w-sm bg-white shadow-lg">
+        <input id="thirdInputSubreddit" class="rounded-xl p-1 m-2 max-w-sm bg-white shadow-lg">
         <br>
         
         <div class="flex justify-center">
-        <button class="text-white m-1 p-1 rounded-xl bg-bggelap border-2 border-colourborder hover:bg-orangeMain w-full">Done</button>
+        <button id='doneChangeSubreddit' class="text-white m-1 p-1 rounded-xl bg-bggelap border-2 border-colourborder hover:bg-orangeMain w-full">Done</button>
         </div>
     </div>
 
     <div class="flex justify-evenly">
-        <button id="firstSubreddit" class="text-white subredditButton w-1/3 m-2 p-3 rounded-xl bg-bgterang border-2 border-colourborder">r/memes</button>
+        <button id="firstSubreddit" class="text-white subredditButton w-1/3 m-2 p-3 rounded-xl bg-bgterang border-2 border-colourborder">backpacking</button>
         <button id="secondSubreddit" class="text-white subredditButton w-1/3 m-2 p-3 rounded-xl bg-bgterang border-2 border-colourborder">r/solotravel</button>
-        <button id="thirdSubreddit" class="text-white subredditButton w-1/3 m-2 p-3 rounded-xl bg-bgterang border-2 border-colourborder">r/onebag</button>
+        <button id="thirdSubreddit" class="text-white subredditButton w-1/3 m-2 p-3 rounded-xl bg-bgterang border-2 border-colourborder">r/jokes</button>
         <!-- <span class="material-symbols-outlined">bookmark</span> -->
     </div>
 
@@ -53,6 +54,8 @@
         <button class="text-white m-1 p-3 rounded-xl bg-bggelap border-2 border-colourborder">KW Post</button>
         <button class="text-white m-1 p-3 rounded-xl bg-bggelap border-2 border-colourborder">KW Comment</button>
         </div>
+        <div id="loadingDiv" class=" flex justify-center"></div>
+        <div id="anakDiv" class=" flex-row justify-center"></div>
     </div>
 
     <!-- <div id="header" class="p-6 text-opacity-20 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex-row justify-center items-center space-x-4">

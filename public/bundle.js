@@ -39866,9 +39866,13 @@ function config (name) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],60:[function(require,module,exports){
 const parentDiv = document.getElementById('parentDiv');
-const subredditButton = document.getElementById('firstSubreddit')
+const firstSubreddit = document.getElementById('firstSubreddit')
+const secondSubreddit = document.getElementById('secondSubreddit')
+const thirdSubreddit = document.getElementById('thirdSubreddit')
 const editSubredditButton = document.getElementById('editSubredditButton');
 const editSubredditDiv = document.getElementById('editSubredditDiv');
+const loadingDiv = document.getElementById('loadingDiv');
+const doneChangeSubreddit = document.getElementById('doneChangeSubreddit');
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -39912,14 +39916,40 @@ editSubredditButton.addEventListener('click', function () {
       }
 });
 
-subredditButton.addEventListener('click', getFirstSubreddit);
+doneChangeSubreddit.addEventListener('click', function () {
+  firstSubreddit.innerText = document.getElementById("firstInputSubreddit").value;
+  secondSubreddit.innerText = document.getElementById("secondInputSubreddit").value;
+  thirdSubreddit.innerText = document.getElementById("thirdInputSubreddit").value;
+  console.log('it\'s alive')
+})
+
+
+firstSubreddit.addEventListener('click', getFirstSubreddit);
+secondSubreddit.addEventListener('click', getSecondSubreddit);
+thirdSubreddit.addEventListener('click', getThirdSubreddit);
+
+// let idSr;
+
+// document.querySelectorAll('button').forEach(occurence => {
+//   idSr = occurence.getAttribute('id');
+//   // occurence.addEventListener('click', getFirstSubreddit);
+// });
+
 
 async function getFirstSubreddit() {
 
-    console.log('loading...')
+    while (anakDiv.hasChildNodes()) {
+      anakDiv.removeChild(anakDiv.firstChild);
+    }
 
-    let subredditName = subredditButton.innerText;
-    await reddit.getSubreddit(subredditName).getHot().then(posts => {
+    let namaSubreddit = firstSubreddit.textContent;
+
+    console.log('loading... ' + namaSubreddit);
+    let loading = document.createElement('p')
+    loading.textContent = 'Loading...'
+    loadingDiv.appendChild(loading)
+
+    await reddit.getSubreddit(namaSubreddit).getHot().then(async posts => {
     
     let postNumber = 1;
     
@@ -40017,12 +40047,264 @@ async function getFirstSubreddit() {
         div.appendChild(expandButton)
 
         // APPEND TO PARENT
-        parentDiv.appendChild(div)
+        anakDiv.appendChild(div)
+        //parentDiv.appendChild(anakDiv)
 
         postNumber++
     });
-});
+
+    });
+
+    loading.remove()
+
 }
+
+async function getSecondSubreddit() {
+
+  while (anakDiv.hasChildNodes()) {
+    anakDiv.removeChild(anakDiv.firstChild);
+  }
+
+  let namaSubreddit = secondSubreddit.textContent;
+
+  console.log('loading... ' + namaSubreddit);
+  let loading = document.createElement('p')
+  loading.textContent = 'Loading...'
+  loadingDiv.appendChild(loading)
+
+  await reddit.getSubreddit(namaSubreddit).getHot().then(async posts => {
+  
+  let postNumber = 1;
+  
+  posts.forEach(submit => {
+      let indexTitle =  postNumber + ". " + submit.title;
+      let indexSelftext = submit.selftext.substring(0,100) + '...';
+      // let indexSelftext = indexSelftextUncut.substring
+      
+      // CREATE POST
+      let div = document.createElement('div')
+      let divDetail = document.createElement('div')
+      let h1 = document.createElement('a')
+      let h4 = document.createElement('p')
+      let noUpvote = document.createElement('p')
+      let noComment = document.createElement('p')
+      let sourceSubreddit = document.createElement('p')
+      
+      divDetail.id = 'divDetail'
+      noUpvote.classList.add('detail')
+      noComment.classList.add('detail')
+      sourceSubreddit.classList.add('detail')
+
+      let grayLine = document.createElement('div')
+      let commentButton = document.createElement('button')
+      let expandButton = document.createElement('button')
+      let bookmarkButton = document.createElement('button')
+         
+      // POPULATE POST
+      let linkPermanent = submit.url
+      h1.setAttribute('href', linkPermanent);
+      h1.textContent = indexTitle   
+      h4.textContent = indexSelftext
+
+      noUpvote.textContent = submit.ups + ' Upvote'
+      noComment.textContent = submit.num_comments + ' Comment'
+      sourceSubreddit.textContent = submit.subreddit_name_prefixed
+
+      grayLine.textContent = ''
+      commentButton.textContent = 'Comment'
+      expandButton.textContent = 'Expand'
+      bookmarkButton.textContent = 'Bookmark'
+
+      // STYLE POST
+      div.classList.add('m-3');
+      div.classList.add('p-3');
+      div.classList.add('border-2');
+      div.classList.add('border-colourborder');
+      div.classList.add('rounded-xl');
+      div.classList.add('bg-bggelap');
+      
+      h1.classList.add('font-bold');
+      h1.classList.add('underline');
+
+      divDetail.classList.add('flex');
+      divDetail.classList.add('justify-between');
+      noUpvote.classList.add('pr-2');
+      noComment.classList.add('pr-2');
+      sourceSubreddit.classList.add('pr-2');
+      noUpvote.classList.add('text-white');
+      noComment.classList.add('text-white');
+      sourceSubreddit.classList.add('text-white');
+      noUpvote.classList.add('text-opacity-25');
+      noComment.classList.add('text-opacity-25');
+      sourceSubreddit.classList.add('text-opacity-25');
+
+      grayLine.classList.add('bg-bgterang');
+      grayLine.classList.add('h-1');
+      grayLine.classList.add('w-auto');
+      grayLine.classList.add('text-transparent');
+      grayLine.classList.add('m-2');
+      grayLine.classList.add('mr-0');
+      grayLine.classList.add('ml-0');
+      commentButton.classList.add('hover:bg-orangeMain');
+      commentButton.classList.add('rounded-xl');
+      commentButton.classList.add('p-2');
+      expandButton.classList.add('hover:bg-orangeMain');
+      expandButton.classList.add('rounded-xl');
+      expandButton.classList.add('p-2');
+      bookmarkButton.classList.add('float-right');
+      bookmarkButton.classList.add('p-2');
+      bookmarkButton.classList.add('pr-0');
+
+      // APPEND POST
+      div.appendChild(h1)
+      div.appendChild(h4)
+      div.appendChild(divDetail)
+      
+      divDetail.appendChild(noUpvote)
+      divDetail.appendChild(noComment)
+      divDetail.appendChild(sourceSubreddit)
+
+      div.appendChild(grayLine)
+      div.appendChild(commentButton)
+      div.appendChild(bookmarkButton)
+      div.appendChild(expandButton)
+
+      // APPEND TO PARENT
+      anakDiv.appendChild(div)
+      //parentDiv.appendChild(anakDiv)
+
+      postNumber++
+  });
+
+  });
+
+  loading.remove()
+
+}
+
+async function getThirdSubreddit() {
+
+  while (anakDiv.hasChildNodes()) {
+    anakDiv.removeChild(anakDiv.firstChild);
+  }
+
+  let namaSubreddit = thirdSubreddit.textContent;
+
+  console.log('loading... ' + namaSubreddit);
+  let loading = document.createElement('p')
+  loading.textContent = 'Loading...'
+  loadingDiv.appendChild(loading)
+
+  await reddit.getSubreddit(namaSubreddit).getHot().then(async posts => {
+  
+  let postNumber = 1;
+  
+  posts.forEach(submit => {
+      let indexTitle =  postNumber + ". " + submit.title;
+      let indexSelftext = submit.selftext.substring(0,100) + '...';
+      // let indexSelftext = indexSelftextUncut.substring
+      
+      // CREATE POST
+      let div = document.createElement('div')
+      let divDetail = document.createElement('div')
+      let h1 = document.createElement('a')
+      let h4 = document.createElement('p')
+      let noUpvote = document.createElement('p')
+      let noComment = document.createElement('p')
+      let sourceSubreddit = document.createElement('p')
+      
+      divDetail.id = 'divDetail'
+      noUpvote.classList.add('detail')
+      noComment.classList.add('detail')
+      sourceSubreddit.classList.add('detail')
+
+      let grayLine = document.createElement('div')
+      let commentButton = document.createElement('button')
+      let expandButton = document.createElement('button')
+      let bookmarkButton = document.createElement('button')
+         
+      // POPULATE POST
+      let linkPermanent = submit.url
+      h1.setAttribute('href', linkPermanent);
+      h1.textContent = indexTitle   
+      h4.textContent = indexSelftext
+
+      noUpvote.textContent = submit.ups + ' Upvote'
+      noComment.textContent = submit.num_comments + ' Comment'
+      sourceSubreddit.textContent = submit.subreddit_name_prefixed
+
+      grayLine.textContent = ''
+      commentButton.textContent = 'Comment'
+      expandButton.textContent = 'Expand'
+      bookmarkButton.textContent = 'Bookmark'
+
+      // STYLE POST
+      div.classList.add('m-3');
+      div.classList.add('p-3');
+      div.classList.add('border-2');
+      div.classList.add('border-colourborder');
+      div.classList.add('rounded-xl');
+      div.classList.add('bg-bggelap');
+      
+      h1.classList.add('font-bold');
+      h1.classList.add('underline');
+
+      divDetail.classList.add('flex');
+      divDetail.classList.add('justify-between');
+      noUpvote.classList.add('pr-2');
+      noComment.classList.add('pr-2');
+      sourceSubreddit.classList.add('pr-2');
+      noUpvote.classList.add('text-white');
+      noComment.classList.add('text-white');
+      sourceSubreddit.classList.add('text-white');
+      noUpvote.classList.add('text-opacity-25');
+      noComment.classList.add('text-opacity-25');
+      sourceSubreddit.classList.add('text-opacity-25');
+
+      grayLine.classList.add('bg-bgterang');
+      grayLine.classList.add('h-1');
+      grayLine.classList.add('w-auto');
+      grayLine.classList.add('text-transparent');
+      grayLine.classList.add('m-2');
+      grayLine.classList.add('mr-0');
+      grayLine.classList.add('ml-0');
+      commentButton.classList.add('hover:bg-orangeMain');
+      commentButton.classList.add('rounded-xl');
+      commentButton.classList.add('p-2');
+      expandButton.classList.add('hover:bg-orangeMain');
+      expandButton.classList.add('rounded-xl');
+      expandButton.classList.add('p-2');
+      bookmarkButton.classList.add('float-right');
+      bookmarkButton.classList.add('p-2');
+      bookmarkButton.classList.add('pr-0');
+
+      // APPEND POST
+      div.appendChild(h1)
+      div.appendChild(h4)
+      div.appendChild(divDetail)
+      
+      divDetail.appendChild(noUpvote)
+      divDetail.appendChild(noComment)
+      divDetail.appendChild(sourceSubreddit)
+
+      div.appendChild(grayLine)
+      div.appendChild(commentButton)
+      div.appendChild(bookmarkButton)
+      div.appendChild(expandButton)
+
+      // APPEND TO PARENT
+      anakDiv.appendChild(div)
+      //parentDiv.appendChild(anakDiv)
+
+      postNumber++
+  });
+
+  });
+
+  loading.remove()
+
+}
+
 // console.log('anjay')
 // npm run watch
 // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
